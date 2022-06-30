@@ -1,8 +1,10 @@
-# need-help-ext-ui
-main ui service.
+# need-help.ext-ui
 
-### Common description
-This service is built with using reactive library `webflux`. For authentication and registration users used `Keycloak`. If authorization is successful `Keycloak` returns to user a JWT token is then used in the headers.
+### common description
+This project aims to help people quickly find helpers for different jobs and for me to better understand `webflux`.
+
+### service description
+Main UI service. This service is built with using reactive library `webflux`. For authentication and registration users used `Keycloak`. If authorization is successful `Keycloak` returns to user a JWT token is then used in the headers.
 
 example basic config `Keycloak`:
 ```yaml
