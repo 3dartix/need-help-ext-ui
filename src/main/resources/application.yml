@@ -1,0 +1,20 @@
+keycloak:
+  realm: ${KC_REALM:need-help}
+  auth-server-url: ${KEYCLOAK_URL:http://localhost:8484/auth}
+  ssl-required: "external"
+  confidential-port: 0
+  default-group: "NEED_HELP_CLIENT"
+  admin-group: "NEED_HELP_ADMIN"
+  credentials:
+    user-manager:
+      client-id: ${KC_USER_MANAGER_ID:need_help_ext-ui_manager}
+      secret: ${KC_USER_MANAGER_SECRET:ENi7c3ADZCfUzQOukPxHhGDDTKMiYhlb}
+    auth:
+      client-id: ${KC_AUTH_CLIENT_ID:need_help_ext-ui_manager}
+      secret: ${KC_AUTH_CLIENT_SECRET:ENi7c3ADZCfUzQOukPxHhGDDTKMiYhlb}
+
+
+server:
+  port: ${SERVER_PORT:8080}
+spring:
+  application.name: ${APPLICATION_NAME:spring-security-keycloak-oauth}
