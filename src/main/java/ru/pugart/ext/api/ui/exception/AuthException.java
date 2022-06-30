@@ -1,4 +1,4 @@
-package ru.pugart.ext.ui.exception;
+package ru.pugart.ext.api.ui.exception;
 
 public class AuthException extends Exception{
     public AuthException(String message) {

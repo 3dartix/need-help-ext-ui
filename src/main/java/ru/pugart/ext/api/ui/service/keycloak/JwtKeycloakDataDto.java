@@ -1,4 +1,4 @@
-package ru.pugart.ext.ui.service.keycloak;
+package ru.pugart.ext.api.ui.service.keycloak;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

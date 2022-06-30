@@ -1,4 +1,4 @@
-package ru.pugart.ext.ui.config;
+package ru.pugart.ext.api.ui.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,9 +8,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import ru.pugart.ext.ui.config.auth.AuthenticationManager;
-import ru.pugart.ext.ui.config.auth.SecurityContextRepository;
-import ru.pugart.ext.ui.service.keycloak.KeycloakClient;
+import ru.pugart.ext.api.ui.config.auth.AuthenticationManager;
+import ru.pugart.ext.api.ui.config.auth.SecurityContextRepository;
+import ru.pugart.ext.api.ui.service.keycloak.KeycloakClient;
 
 @Configuration
 @EnableWebFluxSecurity

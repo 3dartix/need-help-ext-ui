@@ -1,11 +1,11 @@
-package ru.pugart.ext.ui.exception;
+package ru.pugart.ext.api.ui.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import reactor.core.publisher.Mono;
-import ru.pugart.ext.ui.dto.ResponseDto;
+import ru.pugart.ext.api.ui.dto.ResponseDto;
 
 @ControllerAdvice
 @Slf4j

@@ -1,4 +1,4 @@
-package ru.pugart.ext.ui.dto;
+package ru.pugart.ext.api.ui.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;

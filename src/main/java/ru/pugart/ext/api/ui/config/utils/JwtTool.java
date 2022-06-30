@@ -1,4 +1,4 @@
-package ru.pugart.ext.ui.config.utils;
+package ru.pugart.ext.api.ui.config.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.pugart.ext.ui.service.keycloak.JwtKeycloakDataDto;
+import ru.pugart.ext.api.ui.service.keycloak.JwtKeycloakDataDto;
 
 import java.util.ArrayList;
 import java.util.List;

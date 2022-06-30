@@ -1,11 +1,10 @@
-package ru.pugart.ext.ui.service.keycloak;
+package ru.pugart.ext.api.ui.service.keycloak;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
-import org.keycloak.admin.client.resource.GroupsResource;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.authorization.client.AuthzClient;
 import org.keycloak.authorization.client.Configuration;
@@ -15,11 +14,9 @@ import org.keycloak.representations.idm.GroupRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.pugart.ext.ui.config.KeycloakConfig;
-import ru.pugart.ext.ui.dto.JwtDto;
-import ru.pugart.ext.ui.dto.UserDto;
-import ru.pugart.ext.ui.exception.CreateException;
-import ru.pugart.ext.ui.exception.NotFoundException;
+import ru.pugart.ext.api.ui.config.KeycloakConfig;
+import ru.pugart.ext.api.ui.dto.JwtDto;
+import ru.pugart.ext.api.ui.dto.UserDto;
 
 import javax.ws.rs.core.Response;
 import java.util.*;

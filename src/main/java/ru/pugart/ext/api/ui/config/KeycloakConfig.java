@@ -1,4 +1,4 @@
-package ru.pugart.ext.ui.config;
+package ru.pugart.ext.api.ui.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

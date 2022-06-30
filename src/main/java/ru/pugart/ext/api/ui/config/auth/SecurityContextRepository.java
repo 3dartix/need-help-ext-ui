@@ -1,4 +1,4 @@
-package ru.pugart.ext.ui.config.auth;
+package ru.pugart.ext.api.ui.config.auth;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;

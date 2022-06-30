@@ -1,4 +1,4 @@
-package ru.pugart.ext.ui.config.auth;
+package ru.pugart.ext.api.ui.config.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -9,8 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import ru.pugart.ext.ui.config.utils.JwtTool;
-import ru.pugart.ext.ui.service.keycloak.KeycloakClient;
+import ru.pugart.ext.api.ui.config.utils.JwtTool;
+import ru.pugart.ext.api.ui.service.keycloak.KeycloakClient;
 
 import java.util.List;
 import java.util.stream.Collectors;
