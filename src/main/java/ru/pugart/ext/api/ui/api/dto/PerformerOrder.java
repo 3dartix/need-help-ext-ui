@@ -6,21 +6,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.Instant;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Profile {
+public class PerformerOrder {
     private String phone;
-    private String email;
-    private String telegram;
-    private List<Task> tasksAuthor;
-    private List<Task> tasksPerformer;
-    private Boolean verified;
-    private Integer rating;
-    private Boolean isBlocked;
-    private List<String> roles;
+    private BigDecimal amount;
+    private Instant dateStart;
+    private Instant dateEnd;
 }

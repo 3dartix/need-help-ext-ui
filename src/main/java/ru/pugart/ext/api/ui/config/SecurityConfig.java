@@ -2,6 +2,7 @@ package ru.pugart.ext.api.ui.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
@@ -22,7 +23,7 @@ public class SecurityConfig {
     private final AuthenticationManager authenticationManager;
     private final SecurityContextRepository securityContextRepository;
 
-    private static final String[] AUTH_WHITLIST = {
+    private static final String[] AUTH_WHITELIST = {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
@@ -30,17 +31,19 @@ public class SecurityConfig {
             "/user/**"
     };
 
-    private static final String[] AUTH_USER_WHITLIST = {
-            "/api/v1/test2"
+    private static final String[] AUTH_USER_WHITELIST = {
+            "/api/v1/test2",
+            "/api/v1/task/**"
     };
 
-    private static final String[] AUTH_ADMIN_WHITLIST = {
+    private static final String[] AUTH_ADMIN_WHITELIST = {
             "/api/v1/test3",
             "/api/config/**"
     };
 
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http, KeycloakClient keycloakClient) {
+        String[] adminAndUserWhiteList = ArrayUtils.addAll(AUTH_ADMIN_WHITELIST, AUTH_USER_WHITELIST);
         return http
                 .csrf().disable()
                 .formLogin().disable()
@@ -48,9 +51,9 @@ public class SecurityConfig {
                 .authenticationManager(authenticationManager)
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange()
-                .pathMatchers(AUTH_WHITLIST).permitAll()
-                .pathMatchers(AUTH_USER_WHITLIST).hasAnyAuthority(keycloakClient.getDefaultRoles().toArray(String[]::new)) // hasAnyRole for webflux
-                .pathMatchers(AUTH_ADMIN_WHITLIST).hasAnyAuthority(keycloakClient.getAdminRoles().toArray(String[]::new))
+                .pathMatchers(AUTH_WHITELIST).permitAll()
+                .pathMatchers(AUTH_USER_WHITELIST).hasAnyAuthority(keycloakClient.getDefaultRoles().toArray(String[]::new)) // hasAnyRole for webflux
+                .pathMatchers(adminAndUserWhiteList).hasAnyAuthority(keycloakClient.getAdminRoles().toArray(String[]::new))
                 .anyExchange().authenticated()
                 .and()
                 .build();

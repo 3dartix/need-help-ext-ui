@@ -125,7 +125,7 @@ public class KeycloakClient {
                 .log()
                 .flatMap(user -> {
                     createOrUpdateUser(user);
-                    return taskServiceApi.createOrUpdate(
+                    return taskServiceApi.createOrUpdateProfile(
                             Mono.just(Profile.builder()
                                     .email(user.getEmail())
                                     .phone(user.getPhone())

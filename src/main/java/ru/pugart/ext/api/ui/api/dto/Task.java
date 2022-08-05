@@ -13,14 +13,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Profile {
-    private String phone;
-    private String email;
-    private String telegram;
-    private List<Task> tasksAuthor;
-    private List<Task> tasksPerformer;
-    private Boolean verified;
-    private Integer rating;
-    private Boolean isBlocked;
-    private List<String> roles;
+public class Task {
+    private String id;
+    private String author;
+    private TaskDetails taskDetails;
+    private Category taskCategory;
+    private List<PerformerOrder> performerOrders;
 }
