@@ -35,7 +35,8 @@ public class SecurityConfig {
     };
 
     private static final String[] AUTH_ADMIN_WHITLIST = {
-            "/api/v1/test3"
+            "/api/v1/test3",
+            "/api/config/**"
     };
 
     @Bean

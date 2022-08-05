@@ -14,6 +14,9 @@ import org.keycloak.representations.idm.GroupRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
+import ru.pugart.ext.api.ui.api.TaskServiceApi;
+import ru.pugart.ext.api.ui.api.dto.Profile;
 import ru.pugart.ext.api.ui.config.KeycloakConfig;
 import ru.pugart.ext.api.ui.dto.JwtDto;
 import ru.pugart.ext.api.ui.dto.UserDto;
@@ -31,9 +34,13 @@ public class KeycloakClient {
     private final KeycloakConfig keycloakConfig;
     private final RealmResource realm;
 
+    private final TaskServiceApi taskServiceApi;
+
     @Autowired
-    public KeycloakClient(KeycloakConfig keycloakConfig) {
+    public KeycloakClient(KeycloakConfig keycloakConfig, TaskServiceApi taskServiceApi) {
         this.keycloakConfig = keycloakConfig;
+        this.taskServiceApi = taskServiceApi;
+
         String authServerUrl = keycloakConfig.getAuthServerUrl();
         String realm = keycloakConfig.getRealm();
 
@@ -71,7 +78,6 @@ public class KeycloakClient {
     private Optional<UserRepresentation> findUser(String phone) {
         try {
             Optional<UserRepresentation> userOpt = realm.users().search(phone).stream().filter(UserRepresentation::isEnabled).findFirst();
-
             return userOpt;
         } catch (Exception ex) {
             log.error(ex.getLocalizedMessage(), ex);
@@ -114,6 +120,24 @@ public class KeycloakClient {
         }
     }
 
+    public Mono<Profile> userCreate(Mono<UserDto> userDto){
+        return userDto
+                .log()
+                .flatMap(user -> {
+                    createOrUpdateUser(user);
+                    return taskServiceApi.createOrUpdate(
+                            Mono.just(Profile.builder()
+                                    .email(user.getEmail())
+                                    .phone(user.getPhone())
+                                    .roles(getDefaultRoles())
+                                    .isBlocked(false)
+                                    .build()
+                            ))
+                            .switchIfEmpty(Mono.error(new RuntimeException("can`t create new user in task-service")));
+                })
+                .switchIfEmpty(Mono.empty());
+    }
+
     @SneakyThrows
     public boolean createOrUpdateUser(UserDto userDto) {
         Optional<UserRepresentation> userOpt = findUser(userDto.getPhone());
@@ -148,13 +172,13 @@ public class KeycloakClient {
         return true;
     }
 
-    public JwtDto getTokenAndReset(UserDto userDto) {
+    public JwtDto getTokenAndReset(String phone, String password) {
         try {
-            AccessTokenResponse token = authz.obtainAccessToken(userDto.getPhone(), userDto.getPassword());
+            AccessTokenResponse token = authz.obtainAccessToken(phone, password);
             log.info("token: {}; refresh token: {}\"", token.getToken(), token.getRefreshToken());
             return new JwtDto(token.getToken());
         } catch (Exception ex) {
-            log.error("can`t obtain access token for user:{}", userDto.getPhone(), ex);
+            log.error("can`t obtain access token for user:{}", phone, ex);
             throw new RuntimeException(ex);
         }
     }

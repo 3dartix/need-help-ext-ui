@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import ru.pugart.ext.api.ui.api.dto.Profile;
 import ru.pugart.ext.api.ui.dto.JwtDto;
 import ru.pugart.ext.api.ui.dto.UserDto;
 import ru.pugart.ext.api.ui.service.keycloak.KeycloakClient;
@@ -18,14 +19,17 @@ public class AuthController {
     private final KeycloakClient keycloakClient;
 
     @PostMapping("create")
-    public Mono<JwtDto> createUser(@RequestBody Mono<UserDto> userDto){
+    public Mono<Profile> createUser(@RequestBody Mono<UserDto> userDto){
+        return keycloakClient.userCreate(userDto)
+                .log()
+                .switchIfEmpty(Mono.empty());
+    }
+
+    @PostMapping("auth")
+    public Mono<JwtDto> authUser(@RequestBody Mono<UserDto> userDto){
         return userDto
                 .log()
-                .flatMap(u -> {
-                    if(keycloakClient.createOrUpdateUser(u)) {
-                        return Mono.just(keycloakClient.getTokenAndReset(u));
-                    }
-                    return Mono.empty();
-                });
+                .flatMap(u -> Mono.just(keycloakClient.getTokenAndReset(u.getPhone(), u.getPassword())))
+                .switchIfEmpty(Mono.empty());
     }
 }
